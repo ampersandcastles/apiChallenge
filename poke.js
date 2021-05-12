@@ -1,8 +1,3 @@
-// Generate number between 1 & 151.
-const random = (max = 151) => {
-  return Math.floor(Math.random() * max);
-};
-
 const apiURL = "https://pokeapi.co/api/v2/pokemon?limit=151";
 
 const section = document.querySelector("section");
@@ -26,35 +21,21 @@ getPokes();
 // This code works and returns names properly. Don't break it.
 
 function getPokemonData(pokemon) {
-  // let pokeName = pokemon.name;
   let pokeURL = pokemon.url;
-  // // console.log(pokeURL);
-  // // console.log(pokeName);
 
   fetch(pokeURL)
     .then((results) => {
       return results.json();
     })
     .then((sprites) => {
-      // let spritePath = sprites.sprites.front_default;
-      // console.log(spritePath);
       displayPokes(sprites);
     });
 }
 
 function displayPokes(sprites) {
-  let spriteImg = sprites.sprites.front_default.split(",");
-  let pokeSplit = sprites.name.split(","); //OHHHHHHHHHHHHH Now I get it....more than I did.
-  // console.log(pokeSplit);
-  // console.log(spriteImg);
+  let spriteImg = sprites.sprites.front_default;
+  let pokeSplit = sprites.name.split(","); //OHHHHHHHHHHHHH Now I get it....more than I
 
-  // pokeSplit.forEach((e) => {
-  //   let pokeTable = document.createElement("td");
-  //   let pokeName = pokeTable + e;
-  //   console.log(pokeName);
-  // });
-
-  //! THE GOOD CODE STARTS HERE
   let tableBody = document.getElementById("table"),
     newRow,
     newCell,
@@ -64,30 +45,23 @@ function displayPokes(sprites) {
     newRow = document.createElement("tr");
     tableBody.appendChild(newRow);
 
+    //? I don't think this all of this code is needed. Everything seems to be running from the else, but I don't understand well enough to know why.
+
     if (pokeSplit[i] instanceof Array) {
       for (let j = 0; j < pokeSplit[i].length; j++) {
         newCell = document.createElement("td");
-        newCell.textContent = update[i][j];
+        newCell.textContent = update[i][j]; // I don't understand this line at all.
         newRow.appendChild(newCell);
       }
     } else {
       newCell = document.createElement("td");
-      newCell.textContent = pokeSplit[i];
+      newPee = document.createElement("p");
+      newImg = document.createElement("img");
+      newImg.src = spriteImg;
+      newPee.textContent = pokeSplit[i];
       newRow.appendChild(newCell);
-    }
-  }
-
-  for (let k = 0; k < spriteImg.length; k++) {
-    //!! IDIOT, YOU'RE NOT DOING ANYTHING HERE, WHY WOULD YOU THINK ANYTHING BELOW IT WOULD HAPPEN?
-    if (spriteImg[k] instanceof Array) {
-      for (let l = 0; spriteImg[k].length; l++) {
-        newCell = document.createElement("td");
-        newImg = document.createElement("img");
-        newImg.textContent = update[k][l];
-        newImg.src = k;
-        newRow.appendChild(newImg);
-        console.log(k);
-      }
+      newCell.appendChild(newPee);
+      newCell.appendChild(newImg);
     }
   }
 }
