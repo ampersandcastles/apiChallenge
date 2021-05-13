@@ -10,7 +10,6 @@ function getPokes() {
     .then((allPokemon) => {
       allPokemon.results.forEach((pokemon) => {
         getPokemonData(pokemon);
-        // console.log(pokemon.name);
       });
     })
     .catch((err) => console.log(err));
@@ -18,7 +17,7 @@ function getPokes() {
 
 getPokes();
 
-// This code works and returns names properly. Don't break it.
+// This was written as a result of frustration in the inability to return a url as a string properly before learning there were better ways.
 
 function getPokemonData(pokemon) {
   let pokeURL = pokemon.url;
@@ -29,12 +28,13 @@ function getPokemonData(pokemon) {
     })
     .then((sprites) => {
       displayPokes(sprites);
-    });
+    })
+    .catch((err) => console.log(err));
 }
 
 function displayPokes(sprites) {
   let spriteImg = sprites.sprites.front_default;
-  let pokeSplit = sprites.name.split(","); //OHHHHHHHHHHHHH Now I get it....more than I
+  let pokeSplit = sprites.name.split(","); //OHHHHHHHHHHHHH Now I get it....more than I did, at least.
 
   let tableBody = document.getElementById("table"),
     newRow,
@@ -45,7 +45,7 @@ function displayPokes(sprites) {
     newRow = document.createElement("tr");
     tableBody.appendChild(newRow);
 
-    //? I don't think this all of this code is needed. Everything seems to be running from the else, but I don't understand well enough to know why.
+    //? I don't think this all of this code below is needed. Everything seems to be running from the else, but I don't understand well enough to know why.
 
     if (pokeSplit[i] instanceof Array) {
       for (let j = 0; j < pokeSplit[i].length; j++) {
